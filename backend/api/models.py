@@ -3,14 +3,14 @@ from django.contrib.auth.models import User
 
 class Console(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    photo_url = models.URLField(blank=True, null=True, help_text="Link para uma foto do console")
+    photo = models.ImageField(upload_to='consoles/', blank=True, null=True, help_text="Foto do console")
 
     def __str__(self):
         return self.name
 
 class BoardGame(models.Model):
     name = models.CharField(max_length=200, unique=True)
-    cover_image_url = models.URLField(blank=True, null=True)
+    cover_image = models.ImageField(upload_to='boardgames/', blank=True, null=True)
     rules = models.TextField(blank=True, help_text="Digite ou cole as regras aqui")
 
     def __str__(self):
@@ -25,7 +25,7 @@ class Game(models.Model):
     ]
     
     title = models.CharField(max_length=200)
-    cover_image_url = models.URLField(blank=True, null=True)
+    cover_image = models.ImageField(upload_to='games/', blank=True, null=True)
     platform = models.ForeignKey(Console, on_delete=models.SET_NULL, null=True, blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='JOGUEI')
     
