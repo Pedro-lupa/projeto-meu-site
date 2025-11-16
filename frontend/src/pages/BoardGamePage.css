@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #120A1C;
+    min-height: 100vh;
+    color: #E0E0E0;
+    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+}
+
+/* 1. ISSO CENTRALIZA A GALERIA NA PÁGINA */
+.boardgame-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 100%;
+}
+
+.boardgame-page header {
+    display: none;
+}
+
+.loading-message {
+    font-size: 1.5em;
+    color: #E0E0E0;
+    text-align: center;
+    padding: 150px 0;
+}
+
+/* 2. ISSO CENTRALIZA OS JOGOS DENTRO DA GALERIA */
+.boardgame-gallery {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; /* A CHAVE PARA CENTRALIZAR A ÚLTIMA FILEIRA */
+    gap: 25px; 
+    
+    width: 90%;
+    max-width: 1400px;
+    
+    margin-top: 40px;
+    margin-bottom: 50px;
+    
+    padding: 25px;
+    background-color: rgba(26, 18, 38, 0.75);
+    border: 1px solid #7F00FF;
+    border-radius: 10px;
+    box-shadow: 0 0 25px rgba(127, 0, 255, 0.5), inset 0 0 15px rgba(127, 0, 255, 0.3);
+}
+
+.boardgame-card {
+    background-color: #1a1226;
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    
+    display: flex;
+    flex-direction: column;
+    
+    width: 200px; 
+    
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.boardgame-card img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    display: block;
+}
+
+.boardgame-card h3 {
+    background-color: #f4f4f4;
+    color: #1a1226;
+    font-size: 1.1em;
+    font-weight: 700;
+    text-align: center;
+    
+    padding: 10px 8px;
+    margin: 0;
+    
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.boardgame-card:hover {
+    transform: scale(1.05) translateY(-5px);
+    box-shadow: 0 0 25px #00BFFF, 0 0 40px #00BFFF;
+    cursor: pointer;
+}
+
+/* --- Mídia Queries (Responsividade) --- */
+@media (max-width: 768px) {
+    .boardgame-gallery {
+        gap: 20px;
+        padding: 20px;
+    }
+    .boardgame-card {
+        width: 180px; 
+    }
+    .boardgame-card img {
+        height: 250px;
+    }
+    .boardgame-card h3 {
+        font-size: 1em;
+    }
+}
+@media (max-width: 480px) {
+    .boardgame-gallery {
+        gap: 15px;
+        padding: 15px;
+    }
+    .boardgame-card {
+        width: 150px; 
+    }
+    .boardgame-card img {
+        height: 210px;
+    }
+    .boardgame-card h3 {
+        font-size: 0.9em;
+    }
+}

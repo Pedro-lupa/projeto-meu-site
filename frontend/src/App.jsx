@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
+import GameList from './components/GameList';
+import { Link } from 'react-router-dom';
 
 function App() {
 
@@ -25,6 +27,12 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Meu Acervo Geek by Lupa</h1>
+
+        <nav>
+          <Link to="/">Jogos Zerados</Link> | 
+          <Link to="/boardgames">Jogos de Tabuleiro</Link> | 
+          {}
+        </nav>
         
         <h2>Meus Consoles</h2>
         
@@ -32,14 +40,14 @@ function App() {
         {consoles.length === 0 ? (
           <p>Carregando consoles... (Verifique o terminal do backend e o admin!)</p>
         ) : (
-<ul>
+          <ul>
             {consoles.map(console => (
               <li key={console.id}>
                 {console.name}
                 {}
                 {console.photo && (
                   <img 
-                    src={`http://127.0.0.1:8000${console.photo}`} 
+                    src={console.photo} 
                     alt={console.name} 
                     width="100" 
                   />
@@ -48,6 +56,13 @@ function App() {
             ))}
           </ul>
         )}
+
+        {}
+        
+        <hr /> {}
+
+        <GameList /> {}
+
       </header>
     </div>
   );
