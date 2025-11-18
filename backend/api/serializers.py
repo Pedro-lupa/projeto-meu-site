@@ -9,7 +9,7 @@ class ConsoleSerializer(serializers.ModelSerializer):
 class BoardGameSerializer(serializers.ModelSerializer):
     class Meta:
         model = BoardGame
-        fields = ['id', 'name', 'cover_image', 'rules']
+        fields = '__all__'
 
 class PokemonHallOfFameSerializer(serializers.ModelSerializer):
     class Meta:

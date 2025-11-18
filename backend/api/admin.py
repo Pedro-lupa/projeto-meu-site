@@ -12,8 +12,8 @@ class PlatformAdmin(admin.ModelAdmin):
 
 @admin.register(BoardGame)
 class BoardGameAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
+    list_display = ('name', 'year', 'publisher')
+    search_fields = ('name', 'publisher')
 
 @admin.register(Game)
 class GameAdmin(admin.ModelAdmin):

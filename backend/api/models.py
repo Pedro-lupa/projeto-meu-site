@@ -16,9 +16,17 @@ class Platform(models.Model):
         return self.name
 
 class BoardGame(models.Model):
-    name = models.CharField(max_length=200, unique=True)
-    cover_image = models.ImageField(upload_to='boardgames/', blank=True, null=True)
-    rules = models.TextField(blank=True, help_text="Digite ou cole as regras aqui")
+    name = models.CharField(max_length=255)
+    cover_image = models.ImageField(upload_to='boardgames/')
+    rules = models.TextField()
+
+    description = models.TextField(blank=True, null=True)
+    min_players = models.IntegerField(blank=True, null=True)
+    max_players = models.IntegerField(blank=True, null=True)
+    play_time = models.CharField(max_length=50, blank=True, null=True)
+    age = models.CharField(max_length=20, blank=True, null=True)
+    publisher = models.CharField(max_length=100, blank=True, null=True)
+    year = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.name
