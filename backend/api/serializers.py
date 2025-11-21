@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import Console, BoardGame, Game, PokemonHallOfFame, Platform
-
+from .models import Console, BoardGame, Game, PokemonHallOfFame, Platform, Pokemon
+ 
 class ConsoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Console
@@ -23,7 +23,8 @@ class PlatformSerializer(serializers.ModelSerializer):
 
 class GameSerializer(serializers.ModelSerializer):
 
-    platform = PlatformSerializer(read_only=True) 
+    platform = PlatformSerializer(read_only=True)
+    hall_of_fame_entry = PokemonHallOfFameSerializer(read_only=True) 
     class Meta:
         model = Game
         fields = [
@@ -31,3 +32,8 @@ class GameSerializer(serializers.ModelSerializer):
             'play_time', 'rating', 'observations', 'status',
             'hall_of_fame_entry'
         ]
+
+class PokemonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pokemon
+        fields = '__all__'

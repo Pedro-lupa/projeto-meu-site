@@ -34,12 +34,15 @@ class BoardGame(models.Model):
 class Pokemon(models.Model):
     pokedex_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
-    sprite_url = models.URLField(blank=True, null=True)
+ 
+    sprite_url = models.URLField(blank=True, null=True) 
+    shiny_sprite_url = models.URLField(blank=True, null=True)
+    
     type1 = models.CharField(max_length=50)
     type2 = models.CharField(max_length=50, blank=True, null=True)
     
     is_captured = models.BooleanField(default=False)
-    game_captured_in = models.CharField(max_length=100, blank=True, null=True, help_text="Ex: Red, Scarlet, etc.")
+    is_shiny_captured = models.BooleanField(default=False)
 
     def __str__(self):
         return f"#{self.pokedex_id}: {self.name}"

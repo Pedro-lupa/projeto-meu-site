@@ -24,8 +24,9 @@ class GameAdmin(admin.ModelAdmin):
 
 @admin.register(Pokemon)
 class PokemonAdmin(admin.ModelAdmin):
-    list_display = ('pokedex_id', 'name', 'is_captured', 'game_captured_in')
-    list_filter = ('is_captured', 'type1')
+
+    list_display = ('pokedex_id', 'name', 'type1', 'is_captured', 'is_shiny_captured')
+    list_filter = ('is_captured', 'is_shiny_captured', 'type1')
     search_fields = ('name', 'pokedex_id')
 
 @admin.register(PokemonHallOfFame)
