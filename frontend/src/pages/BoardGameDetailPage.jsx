@@ -1,48 +1,51 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import axios from 'axios';
+import './BoardGameDetailPage.css';
 
 function BoardGameDetailPage() {
-
-  const { gameId } = useParams();
-
+  const { id } = useParams();
   const [game, setGame] = useState(null);
 
   useEffect(() => {
-    const apiUrl = `http://127.0.0.1:8000/api/boardgames/${gameId}/`;
-
-    axios.get(apiUrl)
-      .then(response => {
-        setGame(response.data);
-      })
-      .catch(error => {
-        console.error("Erro ao buscar detalhes do jogo:", error);
-      });
-  }, [gameId]);
+    axios.get(`http://127.0.0.1:8000/api/boardgames/${id}/`)
+      .then(response => setGame(response.data))
+      .catch(error => console.error("Erro ao buscar detalhes do jogo:", error));
+  }, [id]);
 
   if (!game) {
-    return <div>Carregando regras...</div>;
+    return <p className="bd-loading">Carregando informações...</p>;
   }
 
   return (
-    <div className="boardgame-detail-page">
-      <header>
-        {}
-        <Link to="/boardgames">Voltar para a lista</Link>
+    <div className="bd-container">
+
+      <header className="bd-header">
+        <Link to="/boardgames" className="bd-back">⟵ Voltar</Link>
         <h1>{game.name}</h1>
       </header>
 
-      <div className="detail-content">
-        <img src={game.cover_image} alt={game.name} width="300" className="detail-cover" />
-        
-        <div className="rules-section">
-          <h2>Regras</h2>
-          {}
-          <p style={{ whiteSpace: 'pre-wrap' }}>
-            {game.rules || 'Regras não cadastradas.'}
-          </p>
+      <div className="bd-content">
+        <img src={game.cover_image} alt={game.name} className="bd-image" />
+
+        <div className="bd-info">
+          <h2>Descrição</h2>
+          <p>{game.description}</p>
+
+          <h3>Informações do Jogo</h3>
+          <ul>
+            <li><strong>Jogadores:</strong> {game.players}</li>
+            <li><strong>Duração:</strong> {game.duration} minutos</li>
+            <li><strong>Idade mínima:</strong> {game.min_age} anos</li>
+          </ul>
+
+          <h3>Regras</h3>
+          <div className="bd-rules">
+            <p>{game.rules}</p>
+          </div>
         </div>
       </div>
+
     </div>
   );
 }

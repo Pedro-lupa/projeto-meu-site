@@ -1,0 +1,56 @@
+.main-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background-color: rgba(18, 10, 28, 0.95);
+    border-bottom: 1px solid #7F00FF;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+.nav-brand a {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5em;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: 0 0 10px #7F00FF;
+}
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #e0e0e0;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+.nav-link:hover {
+    color: #E100FF;
+    text-shadow: 0 0 8px #E100FF;
+}
+.btn-logout {
+    background: transparent;
+    border: 1px solid #ff4d4d;
+    color: #ff4d4d;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s;
+}
+.btn-logout:hover {
+    background: rgba(255, 77, 77, 0.1);
+    box-shadow: 0 0 10px #ff4d4d;
+}
+@media (max-width: 768px) {
+    .main-navbar { padding: 15px 20px; flex-direction: column; gap: 15px; }
+    .nav-links { gap: 15px; flex-wrap: wrap; justify-content: center; }
+}

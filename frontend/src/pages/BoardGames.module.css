@@ -1,0 +1,187 @@
+.bgPage {
+    background: linear-gradient(rgba(18, 10, 28, 0.9), rgba(30, 20, 50, 0.9));
+    min-height: 100vh;
+    color: #E0E0E0;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 40px;
+    overflow-x: hidden;
+}
+.galleryHeader {
+    width: 90%;
+    max-width: 1400px;
+    padding: 80px 0 30px 0;
+    text-align: center;
+    border-bottom: 2px solid rgba(127, 0, 255, 0.3);
+    margin-bottom: 50px;
+    position: relative;
+}
+.galleryHeader h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3em;
+    color: #E100FF;
+    text-shadow: 0 5px 10px rgba(225, 0, 255, 0.3);
+    margin: 10px 0;
+    text-transform: uppercase;
+}
+
+.galleryHeader p {
+    font-weight: 300;
+    color: #ccc;
+    font-size: 1.1em;
+}
+
+.backLink {
+    display: inline-block;
+    color: #E100FF;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 35px;
+    left: 20px;
+    padding: 5px 10px;
+    font-size: 1.1em;
+    z-index: 5;
+}
+
+.backLink:hover {
+    color: #fff;
+    text-shadow: 0 0 8px #E100FF;
+    transform: translateX(-5px);
+}
+
+.shelfDisplay {
+    width: 90%;
+    max-width: 1400px;
+    perspective: 1200px;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.shelfRow3d {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding-top: 30px;
+    padding-bottom: 10px;
+    background: none;
+    box-shadow: none;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.shelfRow3d::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 0;
+    width: 100%;
+    height: 35px;
+    background: #362A3F;
+    border-top: 5px solid #4F435F;
+    border-bottom: 1px solid #1a1226;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    border-radius: 0 0 5px 5px;
+}
+
+.boardgameCard3d {
+    width: calc(20% - 16px);
+    max-width: 250px;
+    height: 250px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease-out;
+    text-decoration: none;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.cardContent3d {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform: rotateY(15deg) translateZ(10px);
+    transform-origin: left center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: #1a1226;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow:
+        5px 5px 15px rgba(0, 0, 0, 0.6),
+        -5px 0 10px rgba(127, 0, 255, 0.2);
+    transition: all 0.6s ease-out;
+}
+
+.cardContent3d img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gameTitle3d {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 0.9em;
+    font-weight: 700;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.boardgameCard3d:hover {
+    transform: translateZ(50px) translateY(-10px);
+}
+
+.boardgameCard3d:hover .cardContent3d {
+    transform: rotateY(0deg) translateZ(0px);
+    border-color: #00BFFF;
+    box-shadow:
+        0 0 25px rgba(0, 191, 255, 0.7),
+        0 0 50px rgba(127, 0, 255, 0.5);
+}
+
+.boardgameCard3d:hover .gameTitle3d {
+    opacity: 1;
+}
+
+/* RESPONSIVO */
+@media (min-width: 1200px) {
+    .boardgameCard3d {
+        width: calc(20% - 16px);
+        height: 280px;
+    }
+}
+
+@media (max-width: 1199px) {
+    .boardgameCard3d {
+        width: calc(25% - 15px);
+        height: 250px;
+    }
+}
+
+@media (max-width: 900px) {
+    .galleryHeader h1 { font-size: 2.5em; }
+    .boardgameCard3d { width: calc(33.333% - 10px); height: 210px; }
+
+    .galleryHeader { padding-top: 40px; }
+}
+
+@media (max-width: 500px) {
+    .galleryHeader h1 { font-size: 2em; }
+    .boardgameCard3d {
+        width: calc(50% - 10px);
+        height: 180px;
+        max-width: 180px;
+    }
+}
