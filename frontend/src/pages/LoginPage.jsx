@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './LoginPage.css';
 
-/* -------------------------------------------------------
-   ÍCONES (mantidos como componentes isolados)
---------------------------------------------------------*/
 const IconInstagram = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
     viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -81,9 +78,6 @@ const IconDice = () => (
   </svg>
 );
 
-/* -------------------------------------------------------
-   COMPONENTE PRINCIPAL
---------------------------------------------------------*/
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -101,7 +95,7 @@ function LoginPage() {
   return (
     <div className="login-page">
 
-      {/* ---------------- NAVBAR ---------------- */}
+      {/*NAVBAR*/}
       <nav className="login-nav">
         <div className="nav-left">
           <Link to="/">Home</Link>
@@ -142,7 +136,7 @@ function LoginPage() {
         </div>
       </nav>
 
-      {/* ---------------- LOGIN BOX ---------------- */}
+      {/*LOGIN BOX*/}
       <div className="login-container">
         <div className="login-box">
           <h1>GEEK’S JOURNEY</h1>
@@ -188,7 +182,7 @@ function LoginPage() {
         </div>
       </div>
 
-      {/* ---------------- BOTÕES NEON ---------------- */}
+      {/*BOTÕES NEON*/}
       <div className="neon-buttons-container">
         <button className="neon-btn purple">
           <span style={{ display: 'flex', marginRight: 8 }}><IconGamepad /></span>

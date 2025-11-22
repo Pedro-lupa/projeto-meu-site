@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import './BoardGameDetailPage.css';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';git 
+import "./BoardGameDetailPage.css";
 
 function BoardGameDetailPage() {
   const { id } = useParams();
@@ -14,39 +16,59 @@ function BoardGameDetailPage() {
   }, [id]);
 
   if (!game) {
-    return <p className="bd-loading">Carregando informações...</p>;
+    return (
+      <>
+        <Navbar />
+        <p className="loading">Carregando informações...</p>
+        <Footer />
+      </>
+    );
   }
 
   return (
-    <div className="bd-container">
+    <>
+      <Navbar />
 
-      <header className="bd-header">
-        <Link to="/boardgames" className="bd-back">⟵ Voltar</Link>
-        <h1>{game.name}</h1>
-      </header>
+      <div className="bgPage">
 
-      <div className="bd-content">
-        <img src={game.cover_image} alt={game.name} className="bd-image" />
+        <header className="header">
+          <Link to="/boardgames" className="backLink">⟵ Voltar</Link>
+          <h1>{game.name}</h1>
+        </header>
 
-        <div className="bd-info">
-          <h2>Descrição</h2>
-          <p>{game.description}</p>
+        <section className="contentWrapper">
 
-          <h3>Informações do Jogo</h3>
-          <ul>
-            <li><strong>Jogadores:</strong> {game.players}</li>
-            <li><strong>Duração:</strong> {game.duration} minutos</li>
-            <li><strong>Idade mínima:</strong> {game.min_age} anos</li>
-          </ul>
-
-          <h3>Regras</h3>
-          <div className="bd-rules">
-            <p>{game.rules}</p>
+          <div className="coverBox">
+            <img src={game.cover_image} alt={game.name} className="coverImage" />
           </div>
-        </div>
+
+          <div className="infoBox">
+            <h2>Descrição</h2>
+            <p>{game.description || "Sem descrição cadastrada."}</p>
+
+            <h3>Informações do Jogo</h3>
+            <ul>
+              <li><strong>Mín. Jogadores:</strong> {game.min_players ?? "?"}</li>
+              <li><strong>Máx. Jogadores:</strong> {game.max_players ?? "?"}</li>
+              <li><strong>Duração:</strong> {game.play_time || "Não informado"}</li>
+              <li><strong>Idade mínima:</strong> {game.age || "Não informado"}</li>
+              <li><strong>Editora:</strong> {game.publisher || "Não informado"}</li>
+              <li><strong>Ano:</strong> {game.year ?? "Não informado"}</li>
+            </ul>
+
+            <h3>Regras</h3>
+            <div className="rulesBox">
+              <pre style={{ whiteSpace: "pre-wrap" }}>
+                {game.rules || "Nenhuma regra cadastrada."}
+              </pre>
+            </div>
+          </div>
+
+        </section>
       </div>
 
-    </div>
+      <Footer />
+    </>
   );
 }
 

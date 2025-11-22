@@ -22,7 +22,6 @@ function BoardGamePage() {
       <div className={styles.bgPage}>
 
         <header className={styles.galleryHeader}>
-          <Link to="/home" className={styles.backLink}>◀ Voltar</Link>
           <h1>Cantinho do Tabuleiro</h1>
           <p>Minha coleção Atual dos Jogos.</p>
         </header>
