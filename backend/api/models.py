@@ -96,3 +96,16 @@ class Feedback(models.Model):
 
     def __str__(self):
         return f"Feedback de {self.user.username} em {self.created_at.strftime('%d/%m/%Y')}"
+
+def avatar_path(instance, filename):
+    return f"avatars/user_{instance.user.id}/{filename}"
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to=avatar_path, blank=True, null=True)
+    bio = models.TextField(blank=True, null=True)
+    favorite_game = models.CharField(max_length=100, blank=True, null=True)
+    favorite_boardgame = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return self.user.username
