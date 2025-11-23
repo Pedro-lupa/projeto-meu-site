@@ -182,7 +182,7 @@ function LoginPage() {
         </div>
       </div>
 
-      {/*BOTÕES NEON*/}
+      {/* ---------------- BOTÕES NEON*/}
       <div className="neon-buttons-container">
         <button className="neon-btn purple">
           <span style={{ display: 'flex', marginRight: 8 }}><IconGamepad /></span>

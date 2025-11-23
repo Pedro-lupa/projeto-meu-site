@@ -6,6 +6,9 @@ import ConsolesPage from "./pages/ConsolesPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import PokemonPage from "./pages/PokemonPage.jsx";
 import SuggestionsPage from "./pages/SuggestionsPage.jsx";
+import RegisterPage from "./pages/RegisterPage.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx"
+
 
 function App() {
   return (
@@ -18,7 +21,11 @@ function App() {
       <Route path="/consoles" element={<ConsolesPage />} />
       <Route path="/pokemon" element={<PokemonPage />} />
       <Route path="/sugestoes" element={<SuggestionsPage />} />
-    </Routes>
+      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/cadastro" element={<RegisterPage />} />
+      <Route path="/profile" element={<ProfilePage />} />
+
+</Routes>
   );
 }
 

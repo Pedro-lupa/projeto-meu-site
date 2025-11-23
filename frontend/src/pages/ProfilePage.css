@@ -1,0 +1,61 @@
+.profile-page {
+    background-color: #120A1C;
+    min-height: 100vh;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+}
+.profile-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 40px;
+    background: #1a1226; 
+    border-radius: 12px;
+    border: 3px solid #E100FF;
+    box-shadow: 0 0 30px rgba(225, 0, 255, 0.5);
+    flex-grow: 1;
+}
+.profile-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5em; 
+    color: #E100FF; 
+    margin-bottom: 40px;
+    text-shadow: 0 0 10px rgba(225, 0, 255, 0.8);
+    text-align: center;
+    text-transform: uppercase;
+}
+.profile-info-grid {
+    display: grid;
+    grid-template-columns: 150px 1fr; 
+    gap: 20px;
+    padding: 20px;
+    border-top: 1px solid rgba(225, 0, 255, 0.2);
+    border-bottom: 1px solid rgba(225, 0, 255, 0.2);
+}
+.profile-info-grid strong {
+    color: #00BFFF; 
+    font-family: 'Orbitron', sans-serif;
+}
+.profile-info-grid p {
+    margin: 0;
+    font-size: 1.1em;
+}
+.edit-btn {
+    margin-top: 30px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    background: #00BFFF;
+    color: #120A1C;
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.7);
+}
+.edit-btn:hover {
+    background: #4de0ff;
+    box-shadow: 0 0 15px rgba(0, 191, 255, 1);
+}

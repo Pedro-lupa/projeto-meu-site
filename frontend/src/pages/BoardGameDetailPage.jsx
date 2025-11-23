@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';git 
+import Footer from '../components/Footer';
 import "./BoardGameDetailPage.css";
 
 function BoardGameDetailPage() {

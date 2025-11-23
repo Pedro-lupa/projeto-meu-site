@@ -99,9 +99,10 @@ function Navbar() {
             <IconDice /> Tabuleiro
         </Link>
 
-        <Link to="/suggestions" className="nav-link"> {}
+        <Link to="/sugestoes" className="nav-link">
             <IconSuggestion /> Sugestões
         </Link>
+
 
         <Link to="/pokemon" className="nav-link">
             <IconGhost /> Pokémon
@@ -110,6 +111,11 @@ function Navbar() {
         <Link to="/about" className="nav-link"> {}
             <IconUser /> Sobre Mim
         </Link>
+
+        <Link to="/profile" className="nav-link">
+            <IconUser /> Perfil
+        </Link>
+
       </div>
 
       {}
