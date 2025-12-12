@@ -1,19 +1,23 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import (ConsoleViewSet, BoardGameViewSet, GameViewSet, PokemonHallOfFameViewSet, PlatformViewSet ,PokemonViewSet, FeedbackCreateView, FeedbackListView,RegisterView,UserProfileView )
+from .views import (
+    PlatformViewSet, GameCatalogViewSet, UserGameEntryViewSet,
+    PokemonViewSet, UserPokemonViewSet, PokemonHallOfFameViewSet,
+    ConsoleViewSet, BoardGameViewSet
+)
 
 router = DefaultRouter()
-router.register(r'consoles', ConsoleViewSet)
-router.register(r'boardgames', BoardGameViewSet)
-router.register(r'games', GameViewSet)
-router.register(r'halloffame', PokemonHallOfFameViewSet)
+
 router.register(r'platforms', PlatformViewSet)
-router.register(r'pokedex', PokemonViewSet)
+router.register(r'catalog', GameCatalogViewSet)
+router.register(r'pokedex-ref', PokemonViewSet) 
+
+router.register(r'my-games', UserGameEntryViewSet, basename='my-games')
+router.register(r'my-pokedex', UserPokemonViewSet, basename='my-pokedex')
+router.register(r'consoles', ConsoleViewSet, basename='consoles')
+router.register(r'boardgames', BoardGameViewSet, basename='boardgames')
+router.register(r'halloffame', PokemonHallOfFameViewSet, basename='halloffame')
 
 urlpatterns = [
-    path('', include(router.urls)), 
-    path('register/', RegisterView.as_view(), name='register'),
-    path('profile/', UserProfileView.as_view(), name='user-profile'),
-    path('feedback/create/', FeedbackCreateView.as_view(), name='feedback-create'),
-    path('feedback/list/', FeedbackListView.as_view(), name='feedback-list'),
+    path('', include(router.urls)),
 ]

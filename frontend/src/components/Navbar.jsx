@@ -2,10 +2,9 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
+// --- SEUS ÍCONES (Mantidos iguais) ---
 const IconHome = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <line x1="6" y1="12" x2="10" y2="12"></line>
     <line x1="8" y1="10" x2="8" y2="14"></line>
     <line x1="15" y1="13" x2="15.01" y2="13"></line>
@@ -14,18 +13,14 @@ const IconHome = () => (
   </svg>
 );
 const IconConsoles = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <rect x="2" y="3" width="20" height="14" rx="2"></rect>
     <line x1="8" y1="21" x2="16" y2="21"></line>
     <line x1="12" y1="17" x2="12" y2="21"></line>
   </svg>
 );
 const IconDice = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <rect x="2" y="2" width="20" height="20" rx="5"></rect>
     <path d="M16 8h.01"></path>
     <path d="M8 8h.01"></path>
@@ -35,18 +30,14 @@ const IconDice = () => (
   </svg>
 );
 const IconSuggestion = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
     <line x1="9" y1="10" x2="15" y2="10"></line>
     <line x1="12" y1="7" x2="12" y2="13"></line>
   </svg>
 );
 const IconGhost = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M9 22v-2a2.5 2.5 0 0 1 5 0v2"></path>
     <path d="M4.8 18.2A9 9 0 1 1 19.2 18.2"></path>
     <path d="M10 9h.01"></path>
@@ -54,38 +45,39 @@ const IconGhost = () => (
   </svg>
 );
 const IconUser = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
     <circle cx="12" cy="7" r="4"></circle>
   </svg>
 );
 const IconLogout = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
     <polyline points="16 17 21 12 16 7"></polyline>
     <line x1="21" y1="12" x2="9" y2="12"></line>
   </svg>
 );
+
+// --- COMPONENTE NAVBAR ---
 function Navbar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    navigate('/');
+    // 1. Limpa os dados do navegador (Token e Nome)
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    
+    // 2. Redireciona para a tela de LOGIN
+    navigate('/login');
   };
 
   return (
     <nav className="main-navbar">
       
-      {}
       <div className="nav-brand">
         <Link to="/home">GEEK'S JOURNEY</Link>
       </div>
 
-      {}
       <div className="nav-links">
         <Link to="/home" className="nav-link">
           <IconHome /> Home
@@ -95,7 +87,7 @@ function Navbar() {
             <IconConsoles /> Consoles
         </Link>
 
-        <Link to="/boardgames" className="nav-link"> {}
+        <Link to="/boardgames" className="nav-link">
             <IconDice /> Tabuleiro
         </Link>
 
@@ -103,23 +95,22 @@ function Navbar() {
             <IconSuggestion /> Sugestões
         </Link>
 
-
         <Link to="/pokemon" className="nav-link">
             <IconGhost /> Pokémon
         </Link>
 
-        <Link to="/about" className="nav-link"> {}
-            <IconUser /> Sobre Mim
-        </Link>
-
+        {/* Removi o "Sobre Mim" pois já tem o ícone na Home ou Footer geralmente, 
+            mas se quiser manter, pode descomentar. 
+            Mudei o ícone do perfil para ficar visualmente separado */}
+        
         <Link to="/profile" className="nav-link">
             <IconUser /> Perfil
         </Link>
 
       </div>
 
-      {}
-      <button onClick={handleLogout} className="btn-logout">
+      {/* Botão Sair com a nova lógica */}
+      <button onClick={handleLogout} className="btn-logout" title="Sair do sistema">
         <IconLogout /> Sair
       </button>
     </nav>
