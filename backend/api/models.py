@@ -1,8 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
+# --- FUNÇÃO AUXILIAR PARA ORGANIZAR ARQUIVOS ---
 def avatar_path(instance, filename):
+    # Salva em: media/avatars/user_1/nomedafoto.jpg
     return f"avatars/user_{instance.user.id}/{filename}"
+
+# --- MODELOS DE SISTEMA (PLATAFORMAS E JOGOS) ---
 
 class Platform(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -19,10 +25,13 @@ class GameCatalog(models.Model):
     cover_url = models.URLField(blank=True, null=True)
     genre = models.CharField(max_length=100, blank=True, null=True)
     release_year = models.IntegerField(blank=True, null=True)
+    # Quem cadastrou esse jogo no sistema global (pode ser nulo se foi importado)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='catalog_contributions')
 
     def __str__(self):
         return f"{self.title}"
+
+# --- MODELOS DE POKÉMON ---
 
 class Pokemon(models.Model):
     pokedex_id = models.IntegerField(primary_key=True)
@@ -48,6 +57,18 @@ class PokemonHallOfFame(models.Model):
     def __str__(self):
         return f"Hall da Fama: {self.game_name} ({self.user.username})"
 
+class UserPokemon(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='pokedex')
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE)
+    is_shiny = models.BooleanField(default=False)
+    # Para saber se já capturou a versão normal ou shiny
+    captured_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'pokemon', 'is_shiny')
+
+# --- MODELOS DE USUÁRIO (COLEÇÃO PESSOAL) ---
+
 class UserGameEntry(models.Model):
     STATUS_CHOICES = [
         ('ZEREI', 'Zerei'),
@@ -61,7 +82,7 @@ class UserGameEntry(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='my_games')
     game_catalog = models.ForeignKey(GameCatalog, on_delete=models.CASCADE, related_name='played_by_users')
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='JOGUEI')
-    rating = models.DecimalField(max_digits=3, decimal_places=1, blank=True, null=True)
+    rating = models.DecimalField(max_digits=3, decimal_places=1, blank=True, null=True) # Nota 0.0 a 10.0
     play_time = models.CharField(max_length=20, blank=True, null=True)
     review = models.TextField(blank=True, null=True)
     hall_of_fame = models.ForeignKey(PokemonHallOfFame, on_delete=models.SET_NULL, null=True, blank=True)
@@ -72,15 +93,6 @@ class UserGameEntry(models.Model):
 
     def __str__(self):
         return f"{self.user.username} jogou {self.game_catalog.title}"
-
-class UserPokemon(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='pokedex')
-    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE)
-    is_shiny = models.BooleanField(default=False)
-    captured_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        unique_together = ('user', 'pokemon', 'is_shiny')
 
 class Console(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -106,16 +118,6 @@ class BoardGame(models.Model):
     def __str__(self):
         return f"{self.name} ({self.user.username})"
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    is_public = models.BooleanField(default=True)
-    avatar = models.ImageField(upload_to=avatar_path, blank=True, null=True)
-    bio = models.TextField(blank=True, null=True)
-    favorite_game = models.CharField(max_length=100, blank=True, null=True)
-    
-    def __str__(self):
-        return self.user.username
-
 class Feedback(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.TextField()
@@ -123,3 +125,29 @@ class Feedback(models.Model):
 
     def __str__(self):
         return f"Feedback de {self.user.username}"
+
+# --- PERFIL SOCIAL DO USUÁRIO ---
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    is_public = models.BooleanField(default=True)
+    avatar = models.ImageField(upload_to=avatar_path, blank=True, null=True)
+    bio = models.TextField(max_length=500, blank=True, null=True)
+    favorite_game = models.CharField(max_length=100, blank=True, null=True)
+    profile_views = models.IntegerField(default=0)
+    
+    def __str__(self):
+        return self.user.username
+
+# --- AUTOMATIZAÇÃO (SIGNALS) ---
+# Isso garante que sempre que um User for criado (no cadastro),
+# um UserProfile vazio é criado automaticamente para ele.
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
