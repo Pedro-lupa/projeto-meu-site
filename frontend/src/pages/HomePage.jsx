@@ -11,24 +11,25 @@ function HomePage() {
   const [boardGames, setBoardGames] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // --- FUNÇÃO MÁGICA PARA CONSERTAR AS IMAGENS ---
   const getImageUrl = (imagePath) => {
     if (!imagePath) return "https://via.placeholder.com/300x400?text=Sem+Capa";
-    
-    // Se a imagem já tiver um link completo (da internet), usa ele
     if (imagePath.startsWith('http')) return imagePath;
-    
-    // Se for um caminho relativo (/media/...), adiciona o endereço do Django
     return `http://127.0.0.1:8000${imagePath}`;
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log("--- INICIANDO BUSCA ---"); // ESPIÃO 1
+
         const gamesResponse = await api.get('my-games/'); 
         const boardGamesResponse = await api.get('boardgames/');
 
+        // ESPIÃO 2: Mostra exatamente o que chegou do Backend
+        console.log("DADOS CHEGARAM:", gamesResponse.data); 
+
         const formattedGames = gamesResponse.data.map(entry => {
+            // Garante que pega os dados do jogo onde quer que eles estejam
             const gameData = entry.game || entry.game_catalog || {}; 
             return {
                 ...entry,       
@@ -37,11 +38,13 @@ function HomePage() {
             };
         });
 
+        console.log("DADOS FORMATADOS:", formattedGames); // ESPIÃO 3
+
         setVideoGames(formattedGames);
         setBoardGames(boardGamesResponse.data);
 
       } catch (error) {
-        console.error("Erro:", error);
+        console.error("ERRO FATAL:", error); // ESPIÃO DE ERRO
         if (error.response && error.response.status === 401) {
             window.location.href = '/login';
         }
@@ -53,7 +56,7 @@ function HomePage() {
     fetchData();
   }, []);
 
-  // --- LÓGICA DE ORDENAÇÃO ---
+  // --- RESTO DO CÓDIGO IGUAL ---
   const pokemonGame = videoGames.find(game => 
     (game.title || game.name)?.toLowerCase().includes("pokemon")
   );
@@ -101,24 +104,20 @@ function HomePage() {
         </div>
       </section>
 
-      {/* SEÇÃO TOP 3 */}
       {top3Games.length >= 3 ? (
         <section className="podium-section">
           <h2><Trophy color="#FFD700" className="section-icon" /> Hall da Fama: Top 3 Zerados</h2>
           <div className="podium-container">
             
-            {/* 2º Lugar */}
             <div className="podium-item silver">
               <div className="podium-rank">2º</div>
               <div className="podium-image-container">
-                  {/* AQUI USAMOS A FUNÇÃO getImageUrl */}
                   <img src={getImageUrl(top3Games[1].cover_image || top3Games[1].image)} alt={top3Games[1].title} />
               </div>
               <h3>{top3Games[1].title || top3Games[1].name}</h3>
               <span className="score"><Star size={14} fill="#C0C0C0" color="#C0C0C0"/> {top3Games[1].score || 0}</span>
             </div>
 
-            {/* 1º Lugar */}
             <div className="podium-item gold">
               <div className="podium-rank">1º</div>
               <div className="podium-image-container">
@@ -128,7 +127,6 @@ function HomePage() {
               <span className="score"><Star size={14} fill="#FFD700" color="#FFD700"/> {top3Games[0].score || 0}</span>
             </div>
 
-            {/* 3º Lugar */}
             <div className="podium-item bronze">
               <div className="podium-rank">3º</div>
               <div className="podium-image-container">
@@ -143,10 +141,12 @@ function HomePage() {
       ) : (
         <div style={{textAlign: 'center', padding: '20px', color: '#888'}}>
             <p>Cadastre pelo menos 3 jogos na sua coleção para ver o Hall da Fama!</p>
+            {/* Dica visual para saber quantos jogos tem carregados */}
+            <p style={{fontSize: '12px'}}>Jogos carregados: {videoGames.length}</p>
         </div>
       )}
 
-      {/* SEÇÃO TABULEIRO */}
+      {/* SEÇÃO TABULEIRO E LISTA GERAL (IGUAIS AO SEU CÓDIGO) */}
       {boardGames.length > 0 && (
         <section className="carousel-section">
           <h2><Dice5 className="section-icon" color="#E100FF" /> Minha Coleção de Tabuleiro</h2>
@@ -169,7 +169,6 @@ function HomePage() {
         </section>
       )}
 
-      {/* LISTA GERAL */}
       {finishedGamesList.length > 0 && (
         <section className="finished-games-section">
           <h2><Gamepad2 className="section-icon" color="#00BFFF" /> Biblioteca de Zerados</h2>

@@ -6,12 +6,14 @@
     flex-direction: column;
     font-family: 'Roboto', sans-serif;
 }
+
 .hero-section {
     text-align: center;
     padding: 80px 20px;
     background: linear-gradient(180deg, rgba(18,10,28,0) 0%, rgba(127,0,255,0.15) 100%);
     border-bottom: 1px solid rgba(127, 0, 255, 0.2);
 }
+
 .hero-section h1 {
     font-family: 'Orbitron', sans-serif;
     font-size: 3em;
@@ -19,6 +21,7 @@
     margin-bottom: 20px;
     text-shadow: 0 0 15px rgba(225, 0, 255, 0.6);
 }
+
 .hero-section p {
     max-width: 700px;
     margin: 0 auto;
@@ -26,6 +29,7 @@
     font-size: 1.2em;
     line-height: 1.6;
 }
+
 section h2 {
     text-align: center;
     margin: 60px 0 40px 0;
@@ -38,9 +42,11 @@ section h2 {
     font-size: 2em;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
+
 .section-icon {
     filter: drop-shadow(0 0 5px currentColor);
 }
+
 .podium-container {
     display: flex;
     justify-content: center;
@@ -50,31 +56,38 @@ section h2 {
     margin-bottom: 50px;
     perspective: 1000px; 
 }
+
 .podium-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
     transition: transform 0.3s, filter 0.3s;
-    width: 160px;
+    width: 200px;
     cursor: default;
 }
+
 .podium-item:hover { 
     transform: translateY(-10px) scale(1.02); 
     filter: brightness(1.2);
 }
+
 .podium-image-container {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     transition: box-shadow 0.3s;
+    background-color: #1a1226; 
 }
+
+/* --- MUDANÇA 1: IMAGENS DO TOP 3 --- */
 .podium-item img {
     width: 100%;
     height: 220px;
-    object-fit: cover;
+    object-fit: fill; /* ESTICA a imagem para preencher tudo */
     display: block;
 }
+
 .podium-rank {
     font-family: 'Orbitron', sans-serif;
     font-weight: bold;
@@ -82,6 +95,7 @@ section h2 {
     margin-bottom: 10px;
     text-shadow: 0 0 10px rgba(0,0,0,0.8);
 }
+
 .podium-item h3 {
     margin: 15px 0 5px 0;
     font-size: 1.1em;
@@ -91,12 +105,14 @@ section h2 {
     text-overflow: ellipsis;
     width: 100%;
 }
+
 .score {
     display: flex;
     align-items: center;
     gap: 5px;
     font-weight: bold;
 }
+
 .gold { 
     order: 2; 
     z-index: 10; 
@@ -112,6 +128,7 @@ section h2 {
 .gold .podium-rank {
      color: #FFD700; 
 }
+
 .silver {
      order: 1; 
 }
@@ -121,6 +138,7 @@ section h2 {
 .silver .podium-rank {
      color: #C0C0C0; 
 }
+
 .bronze {
      order: 3; 
 }
@@ -130,11 +148,13 @@ section h2 {
 .bronze .podium-rank {
      color: #CD7F32; 
 }
+
 .carousel-nav-container {
     position: relative;
     max-width: 1400px;
     margin: 0 auto;
 }
+
 .carousel-wrapper {
     width: 100%;
     overflow-x: auto;
@@ -142,9 +162,11 @@ section h2 {
     scroll-behavior: smooth;
     scrollbar-width: none;
 }
+
 .carousel-wrapper::-webkit-scrollbar {
      display: none; 
 }
+
 .carousel-container {
     display: flex;
     flex-wrap: nowrap;
@@ -154,6 +176,7 @@ section h2 {
     overflow-x: visible;
     -ms-overflow-style: none;
 }
+
 .carousel-card {
     flex-shrink: 0;
     width: 150px; 
@@ -166,19 +189,23 @@ section h2 {
     cursor: pointer;
     border: 1px solid rgba(255,255,255,0.1);
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    background-color: #1a1226; 
 }
+
 .carousel-card:hover { 
     transform: scale(1.05) translateY(-5px); 
     border-color: #E100FF; 
     box-shadow: 0 0 20px rgba(225, 0, 255, 0.4); 
 }
+
+/* --- MUDANÇA 2: IMAGENS DO CARROSSEL --- */
 .carousel-card img { 
     width: 100%; 
     height: 100%; 
-    object-fit: cover; 
+    object-fit: fill; /* ESTICA a imagem */
     display: block;
-    width: 100%;
 }
+
 .carousel-info { 
     padding: 15px; 
     background: linear-gradient(to top, rgba(26, 18, 38, 1) 50%, rgba(26, 18, 38, 0.5));
@@ -190,6 +217,7 @@ section h2 {
     width: 100%;
     border-top: 1px solid rgba(255,255,255,0.1);
 }
+
 .carousel-info h4 { 
     margin: 0; 
     color: #fff; 
@@ -198,6 +226,7 @@ section h2 {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .carousel-nav-btn {
     position: absolute;
     top: 50%; 
@@ -217,6 +246,7 @@ section h2 {
     z-index: 20; 
     transition: background 0.2s, color 0.2s;
 }
+
 .carousel-nav-btn:hover {
     background: #E100FF; 
     color: #fff;
@@ -225,9 +255,11 @@ section h2 {
 .carousel-nav-btn.right {
     right: 50px; 
 }
+
 .carousel-nav-btn.left {
     left: 50px;
 }
+
 .games-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -236,6 +268,7 @@ section h2 {
     max-width: 1400px;
     margin: 0 auto;
 }
+
 .game-grid-card {
     position: relative;
     border-radius: 12px;
@@ -245,17 +278,21 @@ section h2 {
     background: #1a1226;
     box-shadow: 0 5px 15px rgba(0,0,0,0.5);
 }
+
 .game-grid-card:hover { 
     transform: translateY(-8px); 
     box-shadow: 0 0 25px #00BFFF; 
     z-index: 2;
 }
+
+/* --- MUDANÇA 3: IMAGENS DA LISTA GERAL --- */
 .game-grid-card img { 
     width: 100%; 
     height: 280px; 
-    object-fit: cover; 
+    object-fit: fill; /* ESTICA a imagem */
     display: block; 
 }
+
 .card-overlay {
     position: absolute;
     bottom: 0;
@@ -267,6 +304,7 @@ section h2 {
     justify-content: space-between;
     align-items: flex-end;
 }
+
 .card-overlay h4 { 
     margin: 0; 
     font-size: 1em; 
@@ -274,6 +312,7 @@ section h2 {
     color: #fff;
     font-weight: 600;
 }
+
 .score-badge {
     background: #00BFFF;
     padding: 4px 8px;
@@ -283,6 +322,7 @@ section h2 {
     font-size: 0.9em;
     box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
 }
+
 @media (max-width: 768px) {
     .hero-content h1 { font-size: 2em; }
     

@@ -67,23 +67,33 @@ function LoginPage() {
   // --- LÓGICA DE LOGIN CONECTADA AO BACKEND ---
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(''); // Limpa erros antigos
+    setError('');
 
     try {
-      // 1. Envia E-mail e Senha para o Django
+      console.log("Enviando dados:", { email, password }); // Espião 1
+
       const response = await api.post('token-auth/', { email, password });
       
-      // 2. Recebe o Token e o Username
-      const { token, username } = response.data;
+      console.log("RESPOSTA DO SERVIDOR:", response.data); // Espião 2: O QUE VEIO?
 
-      // 3. Salva no navegador
+      // Tenta encontrar o token com vários nomes possíveis
+      const token = response.data.token || response.data.key || response.data.access;
+      const username = response.data.username || response.data.user || response.data.email;
+
+      if (!token) {
+        console.error("PERIGO: O Token veio vazio ou com nome errado!");
+        setError("Erro técnico: Servidor não enviou o token corretamente.");
+        return;
+      }
+
+      // Salva no navegador
       localStorage.setItem('token', token);
       localStorage.setItem('username', username);
 
-      console.log("Login Sucesso:", username);
+      console.log("Token salvo com sucesso:", token);
 
-      // 4. Redireciona e recarrega para atualizar a Navbar
-      navigate('/home');
+      // Redireciona
+      navigate('/');
       window.location.reload(); 
 
     } catch (err) {
@@ -91,7 +101,7 @@ function LoginPage() {
       setError('E-mail ou senha incorretos! Tente novamente.');
     }
   };
-
+  
   return (
     <div className="login-page">
 
