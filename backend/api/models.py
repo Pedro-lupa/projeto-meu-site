@@ -25,7 +25,6 @@ class GameCatalog(models.Model):
     cover_url = models.URLField(blank=True, null=True)
     genre = models.CharField(max_length=100, blank=True, null=True)
     release_year = models.IntegerField(blank=True, null=True)
-    # Quem cadastrou esse jogo no sistema global (pode ser nulo se foi importado)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='catalog_contributions')
 
     def __str__(self):
@@ -61,7 +60,6 @@ class UserPokemon(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='pokedex')
     pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE)
     is_shiny = models.BooleanField(default=False)
-    # Para saber se já capturou a versão normal ou shiny
     captured_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -82,7 +80,7 @@ class UserGameEntry(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='my_games')
     game_catalog = models.ForeignKey(GameCatalog, on_delete=models.CASCADE, related_name='played_by_users')
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='JOGUEI')
-    rating = models.DecimalField(max_digits=3, decimal_places=1, blank=True, null=True) # Nota 0.0 a 10.0
+    rating = models.DecimalField(max_digits=3, decimal_places=1, blank=True, null=True) 
     play_time = models.CharField(max_length=20, blank=True, null=True)
     review = models.TextField(blank=True, null=True)
     hall_of_fame = models.ForeignKey(PokemonHallOfFame, on_delete=models.SET_NULL, null=True, blank=True)
@@ -118,30 +116,60 @@ class BoardGame(models.Model):
     def __str__(self):
         return f"{self.name} ({self.user.username})"
 
-class Feedback(models.Model):
+# --- SISTEMA SOCIAL (SEGUIR, CURTIR, COMENTAR) ---
+
+class Follow(models.Model):
+    follower = models.ForeignKey(User, related_name='following', on_delete=models.CASCADE)
+    followed = models.ForeignKey(User, related_name='followers', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('follower', 'followed')
+
+    def __str__(self):
+        return f"{self.follower.username} segue {self.followed.username}"
+
+class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    message = models.TextField()
+    game_entry = models.ForeignKey(UserGameEntry, related_name='likes', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'game_entry')
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    game_entry = models.ForeignKey(UserGameEntry, related_name='comments', on_delete=models.CASCADE)
+    text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Feedback de {self.user.username}"
+        return f"Comentário de {self.user.username} em {self.game_entry.game_catalog.title}"
 
-# --- PERFIL SOCIAL DO USUÁRIO ---
+# --- PERFIL E GALERIA ---
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     is_public = models.BooleanField(default=True)
     avatar = models.ImageField(upload_to=avatar_path, blank=True, null=True)
-    bio = models.TextField(max_length=500, blank=True, null=True)
+    bio = models.TextField(max_length=150, blank=True, null=True) # Reduzido para estilo Instagram
     favorite_game = models.CharField(max_length=100, blank=True, null=True)
     profile_views = models.IntegerField(default=0)
+    avatar_position = models.CharField(max_length=50, default='50% 50%')
     
     def __str__(self):
         return self.user.username
+    
+class Achievement(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='achievements')
+    title = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='achievements/')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.title} - {self.user.username}"
 
 # --- AUTOMATIZAÇÃO (SIGNALS) ---
-# Isso garante que sempre que um User for criado (no cadastro),
-# um UserProfile vazio é criado automaticamente para ele.
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -150,4 +178,5 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+    if hasattr(instance, 'profile'):
+        instance.profile.save()
