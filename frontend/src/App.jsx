@@ -9,24 +9,30 @@ import SuggestionsPage from "./pages/SuggestionsPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 
+const PrivateRoute = ({ children }) => {
+  const isAuthenticated = !!localStorage.getItem('token');
+  return isAuthenticated ? children : <Navigate to="/register" />;
+};
+
 function App() {
   return (
     <Routes>
-      {/* 1. A Raiz do site: Redireciona para /home (ou pode renderizar a Home direto) */}
+      {/* 1. A Raiz do site: Redireciona para /home */}
       <Route path="/" element={<Navigate to="/home" />} />
 
       {/* 2. A rota principal pública */}
       <Route path="/home" element={<Home />} />
 
-      {/* 3. A rota de Login (Importante ser /login para bater com o resto da lógica) */}
+      {/* 3. A rota de Login */}
       <Route path="/login" element={<LoginPage />} />
 
-      {/* 4. Rotas de Cadastro (deixei as duas opções que você colocou) */}
+      {/* 4. Rotas de Cadastro */}
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/cadastro" element={<RegisterPage />} />
 
-      {/* 5. Área Privada (Perfil) */}
-      <Route path="/profile" element={<ProfilePage />} />
+      {/* 5. Área de Perfil (COM SUPORTE A VISITANTE) */}
+      {/* O ":username?" permite acessar /profile (meu) ou /profile/pedrinho (visitante) */}
+      <Route path="/profile/:username?" element={<ProfilePage />} />
 
       {/* 6. As outras páginas */}
       <Route path="/boardgames" element={<BoardGamePage />} />

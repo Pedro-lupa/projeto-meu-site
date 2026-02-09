@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
-// --- SEUS ÍCONES (Mantidos iguais) ---
+// --- ÍCONES (Mantidos) ---
 const IconHome = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <line x1="6" y1="12" x2="10" y2="12"></line>
@@ -61,13 +61,15 @@ const IconLogout = () => (
 // --- COMPONENTE NAVBAR ---
 function Navbar() {
   const navigate = useNavigate();
+  
+  const isGuest = !localStorage.getItem('token');
+  const myUsername = localStorage.getItem('username');
 
   const handleLogout = () => {
-    // 1. Limpa os dados do navegador (Token e Nome)
     localStorage.removeItem('token');
     localStorage.removeItem('username');
-    
-    // 2. Redireciona para a tela de LOGIN
+    localStorage.removeItem('user_id'); 
+    localStorage.removeItem('email');
     navigate('/login');
   };
 
@@ -98,21 +100,43 @@ function Navbar() {
         <Link to="/pokemon" className="nav-link">
             <IconGhost /> Pokémon
         </Link>
-
-        {/* Removi o "Sobre Mim" pois já tem o ícone na Home ou Footer geralmente, 
-            mas se quiser manter, pode descomentar. 
-            Mudei o ícone do perfil para ficar visualmente separado */}
         
-        <Link to="/profile" className="nav-link">
+        <Link 
+            to={isGuest ? "/login" : `/profile/${myUsername}`} 
+            className="nav-link"
+        >
             <IconUser /> Perfil
         </Link>
 
       </div>
 
-      {/* Botão Sair com a nova lógica */}
-      <button onClick={handleLogout} className="btn-logout" title="Sair do sistema">
-        <IconLogout /> Sair
-      </button>
+      {/* --- ÁREA DE LOGIN/CADASTRO --- */}
+      {isGuest ? (
+        <div style={{display: 'flex', gap: '15px', alignItems: 'center'}}>
+            {/* Botão Cadastrar (Link simples) */}
+            <Link 
+                to="/register" 
+                style={{
+                    color: '#e100ff', 
+                    textDecoration: 'none', 
+                    fontWeight: 'bold', 
+                    fontSize: '0.9rem',
+                    transition: '0.3s'
+                }}
+            >
+                Cadastrar
+            </Link>
+
+            {/* Botão Entrar (Botão estilizado) */}
+            <Link to="/login" className="btn-logout" style={{textDecoration: 'none'}}>
+                Entrar
+            </Link>
+        </div>
+      ) : (
+        <button onClick={handleLogout} className="btn-logout" title="Sair do sistema">
+            <IconLogout /> Sair
+        </button>
+      )}
     </nav>
   );
 }

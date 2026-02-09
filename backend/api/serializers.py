@@ -39,7 +39,7 @@ class AchievementSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'image', 'created_at']
         read_only_fields = ['user']
 
-# --- SERIALIZERS SOCIAIS (NOVO) ---
+# --- SERIALIZERS SOCIAIS ---
 
 class FollowSerializer(serializers.ModelSerializer):
     follower_username = serializers.ReadOnlyField(source='follower.username')
@@ -67,18 +67,77 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'game_entry', 'username', 'avatar', 'text', 'created_at']
         read_only_fields = ['user']
 
-# --- SERIALIZERS DE CONTEÚDO (JOGOS E SETUP) ---
+# --- SERIALIZERS DE CONTEÚDO (VÍDEO GAMES) ---
 
 class UserGameEntrySerializer(serializers.ModelSerializer):
-    # Inclui contagem de likes e comentários para o feed
-    likes_count = serializers.IntegerField(source='likes.count', read_only=True)
-    comments_count = serializers.IntegerField(source='comments.count', read_only=True)
+    game_title = serializers.CharField(write_only=True)
+    platform_name = serializers.CharField(write_only=True, required=False, allow_blank=True)
+    genre = serializers.CharField(write_only=True, required=False, allow_blank=True)
+    release_year = serializers.IntegerField(write_only=True, required=False, allow_null=True)
+    cover_image = serializers.ImageField(write_only=True, required=False)
 
     class Meta:
         model = UserGameEntry
         fields = '__all__'
         depth = 1 
         read_only_fields = ['user']
+
+    def create(self, validated_data):
+        title = validated_data.pop('game_title')
+        plat_name = validated_data.pop('platform_name', None)
+        genre = validated_data.pop('genre', '')
+        year = validated_data.pop('release_year', None)
+        cover = validated_data.pop('cover_image', None)
+
+        game_obj, created = GameCatalog.objects.get_or_create(title=title)
+
+        if created or not game_obj.cover_image:
+            if plat_name:
+                game_obj.platform = Platform.objects.filter(name=plat_name).first()
+            game_obj.genre = genre
+            game_obj.release_year = year
+            if cover:
+                game_obj.cover_image = cover
+            game_obj.save() 
+
+        validated_data['game_catalog'] = game_obj
+        validated_data['user'] = self.context['request'].user
+        return super().create(validated_data)
+
+# --- SERIALIZER POKÉMON HALL OF FAME (CORRIGIDO PARA EVITAR ERRO 400) ---
+
+class PokemonHallOfFameSerializer(serializers.ModelSerializer):
+    game_title = serializers.CharField(write_only=True)
+    
+    # Tornamos os sprites opcionais no Serializer para evitar erro se enviar menos de 6
+    sprite_1 = serializers.ImageField(required=False, allow_null=True)
+    sprite_2 = serializers.ImageField(required=False, allow_null=True)
+    sprite_3 = serializers.ImageField(required=False, allow_null=True)
+    sprite_4 = serializers.ImageField(required=False, allow_null=True)
+    sprite_5 = serializers.ImageField(required=False, allow_null=True)
+    sprite_6 = serializers.ImageField(required=False, allow_null=True)
+
+    class Meta:
+        model = PokemonHallOfFame
+        fields = '__all__'
+        depth = 1
+        # Protegemos game_catalog e user da validação de entrada
+        read_only_fields = ['user', 'game_catalog']
+
+    def create(self, validated_data):
+        title = validated_data.pop('game_title')
+        # Busca o jogo que você selecionou no React
+        game_obj = GameCatalog.objects.filter(title=title).first()
+        
+        if not game_obj:
+            raise serializers.ValidationError({"game_title": "Jogo não encontrado no catálogo."})
+
+        validated_data['game_catalog'] = game_obj
+        validated_data['user'] = self.context['request'].user
+        
+        return super().create(validated_data)
+
+# --- OUTROS SERIALIZERS ---
 
 class ConsoleSerializer(serializers.ModelSerializer):
     class Meta:
@@ -92,8 +151,6 @@ class BoardGameSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ['user']
 
-# --- SERIALIZERS DE POKÉMON ---
-
 class PokemonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pokemon
@@ -104,10 +161,4 @@ class UserPokemonSerializer(serializers.ModelSerializer):
         model = UserPokemon
         fields = '__all__'
         depth = 1
-        read_only_fields = ['user']
-
-class PokemonHallOfFameSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PokemonHallOfFame
-        fields = '__all__'
         read_only_fields = ['user']

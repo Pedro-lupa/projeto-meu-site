@@ -1,271 +1,327 @@
+/* =========================================
+   ESTILOS GERAIS
+   ========================================= */
 .home-container {
-    background-color: #120A1C;
+    background-color: #0f0318;
     min-height: 100vh;
     color: #fff;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Rajdhani', sans-serif;
+    overflow-x: hidden; /* Evita rolagem lateral indesejada */
 }
 
-.hero-section {
-    text-align: center;
-    padding: 80px 20px;
-    background: linear-gradient(180deg, rgba(18,10,28,0) 0%, rgba(127,0,255,0.15) 100%);
-    border-bottom: 1px solid rgba(127, 0, 255, 0.2);
-}
-
-.hero-section h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 3em;
-    color: #E100FF;
-    margin-bottom: 20px;
-    text-shadow: 0 0 15px rgba(225, 0, 255, 0.6);
-}
-
-.hero-section p {
-    max-width: 700px;
-    margin: 0 auto;
-    color: #ccc;
-    font-size: 1.2em;
-    line-height: 1.6;
-}
-
-section h2 {
-    text-align: center;
-    margin: 60px 0 40px 0;
-    font-family: 'Orbitron', sans-serif;
+.loading-screen {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px;
+    height: 100vh;
+}
+
+/* Títulos das Seções */
+h2 {
+    font-size: 2rem;
     color: #fff;
-    font-size: 2em;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .section-icon {
-    filter: drop-shadow(0 0 5px currentColor);
+    margin-right: 5px;
+}
+
+/* =========================================
+   1. HERO SECTION (Topo com Busca)
+   ========================================= */
+.hero-section {
+    background: linear-gradient(180deg, #1a0e27 0%, #0f0318 100%);
+    padding: 80px 20px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    color: #fff;
+    text-shadow: 0 0 10px #e100ff, 0 0 20px #e100ff;
+    margin-bottom: 10px;
+}
+
+.hero-content p {
+    color: #aaa;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+/* Formulário de Busca */
+.hero-search-form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.hero-search-form input {
+    width: 300px;
+    padding: 12px 20px;
+    border-radius: 30px;
+    border: 2px solid #e100ff;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+.hero-search-form input:focus {
+    box-shadow: 0 0 15px rgba(225, 0, 255, 0.3);
+}
+
+.hero-search-form button {
+    background: #e100ff;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.hero-search-form button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #e100ff;
+}
+
+/* =========================================
+   2. COMUNIDADE (Perfis Populares)
+   ========================================= */
+.community-section {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.profiles-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.profile-card-link { text-decoration: none; }
+
+.profile-card-home {
+    background: #150a20;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #333;
+    width: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.profile-card-home:hover {
+    border-color: #00f7ff;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 247, 255, 0.2);
+}
+
+/* CORREÇÃO IMPORTANTE PARA FOTO NÃO FICAR GIGANTE */
+.profile-card-home img {
+    width: 80px !important;
+    height: 80px !important;
+    border-radius: 50%;
+    border: 2px solid #00f7ff;
+    margin-bottom: 10px;
+    object-fit: cover;
+}
+
+.profile-info-home h4 {
+    margin: 0;
+    color: #fff;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.views-badge {
+    font-size: 0.8rem;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+/* =========================================
+   3. HALL DA FAMA (Pódio Top 3)
+   ========================================= */
+.podium-section {
+    padding: 40px 20px;
+    text-align: center;
 }
 
 .podium-container {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    gap: 30px;
-    padding: 20px;
-    margin-bottom: 50px;
-    perspective: 1000px; 
+    gap: 15px;
+    margin-top: 30px;
+    height: 380px;
 }
 
 .podium-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
-    transition: transform 0.3s, filter 0.3s;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
     width: 200px;
-    cursor: default;
-}
-
-.podium-item:hover { 
-    transform: translateY(-10px) scale(1.02); 
-    filter: brightness(1.2);
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
 .podium-image-container {
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-    transition: box-shadow 0.3s;
-    background-color: #1a1226; 
-}
-
-/* --- MUDANÇA 1: IMAGENS DO TOP 3 --- */
-.podium-item img {
     width: 100%;
-    height: 220px;
-    object-fit: fill; /* ESTICA a imagem para preencher tudo */
-    display: block;
+    height: 180px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #000;
 }
 
-.podium-rank {
-    font-family: 'Orbitron', sans-serif;
-    font-weight: bold;
-    font-size: 2em;
-    margin-bottom: 10px;
-    text-shadow: 0 0 10px rgba(0,0,0,0.8);
+.podium-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.3s;
 }
+
+.podium-item:hover img { transform: scale(1.05); }
 
 .podium-item h3 {
-    margin: 15px 0 5px 0;
-    font-size: 1.1em;
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #fff;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 100%;
+    max-width: 100%;
 }
 
 .score {
     display: flex;
     align-items: center;
     gap: 5px;
+    font-size: 0.9rem;
     font-weight: bold;
 }
 
-.gold { 
-    order: 2; 
-    z-index: 10; 
-    transform: scale(1.1);
-    margin-bottom: 20px; 
-} 
-.gold:hover {
-     transform: scale(1.15) translateY(-10px); 
-}
-.gold .podium-image-container {
-     border: 3px solid #FFD700; box-shadow: 0 0 25px rgba(255, 215, 0, 0.4); 
-}
-.gold .podium-rank {
-     color: #FFD700; 
-}
+/* Cores das Medalhas */
+.gold { background: linear-gradient(0deg, rgba(255, 215, 0, 0.2), transparent); border-bottom: 4px solid #FFD700; height: 100%; order: 2; z-index: 2; }
+.silver { background: linear-gradient(0deg, rgba(192, 192, 192, 0.2), transparent); border-bottom: 4px solid #C0C0C0; height: 85%; order: 1; }
+.bronze { background: linear-gradient(0deg, rgba(205, 127, 50, 0.2), transparent); border-bottom: 4px solid #CD7F32; height: 75%; order: 3; }
 
-.silver {
-     order: 1; 
-}
-.silver .podium-image-container {
-     border: 3px solid #C0C0C0; box-shadow: 0 0 15px rgba(192, 192, 192, 0.3); 
-}
-.silver .podium-rank {
-     color: #C0C0C0; 
-}
+.podium-rank { font-size: 2rem; font-weight: bold; margin-bottom: 5px; }
+.gold .podium-rank { color: #FFD700; }
+.silver .podium-rank { color: #C0C0C0; }
+.bronze .podium-rank { color: #CD7F32; }
 
-.bronze {
-     order: 3; 
-}
-.bronze .podium-image-container {
-     border: 3px solid #CD7F32; box-shadow: 0 0 15px rgba(205, 127, 50, 0.3); 
-}
-.bronze .podium-rank {
-     color: #CD7F32; 
+/* =========================================
+   4. CARROSSEL (Tabuleiro)
+   ========================================= */
+.carousel-section {
+    padding: 40px 20px;
+    text-align: center;
 }
 
 .carousel-nav-container {
-    position: relative;
-    max-width: 1400px;
-    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 .carousel-wrapper {
-    width: 100%;
+    width: 80%;
+    max-width: 900px;
     overflow-x: auto;
-    padding: 20px 0;
     scroll-behavior: smooth;
     scrollbar-width: none;
 }
-
-.carousel-wrapper::-webkit-scrollbar {
-     display: none; 
-}
+.carousel-wrapper::-webkit-scrollbar { display: none; }
 
 .carousel-container {
     display: flex;
-    flex-wrap: nowrap;
-    scroll-snap-type: x mandatory;
-    gap: 25px;
-    padding: 0 50px; 
-    overflow-x: visible;
-    -ms-overflow-style: none;
+    gap: 20px;
+    padding: 10px;
 }
 
 .carousel-card {
-    flex-shrink: 0;
-    width: 150px; 
-    height: 250px; 
-    scroll-snap-align: start;
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
-    cursor: pointer;
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    background-color: #1a1226; 
+    min-width: 160px;
+    background: #150a20;
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #333;
 }
 
-.carousel-card:hover { 
-    transform: scale(1.05) translateY(-5px); 
-    border-color: #E100FF; 
-    box-shadow: 0 0 20px rgba(225, 0, 255, 0.4); 
-}
-
-/* --- MUDANÇA 2: IMAGENS DO CARROSSEL --- */
-.carousel-card img { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: fill; /* ESTICA a imagem */
-    display: block;
-}
-
-.carousel-info { 
-    padding: 15px; 
-    background: linear-gradient(to top, rgba(26, 18, 38, 1) 50%, rgba(26, 18, 38, 0.5));
-    text-align: center; 
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+.carousel-card img {
     width: 100%;
-    border-top: 1px solid rgba(255,255,255,0.1);
+    height: 160px;
+    object-fit: cover;
+    border-radius: 5px;
 }
 
-.carousel-info h4 { 
-    margin: 0; 
-    color: #fff; 
-    font-size: 1em; 
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.carousel-info h4 {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #ddd;
 }
 
 .carousel-nav-btn {
-    position: absolute;
-    top: 50%; 
-    transform: translateY(-50%);
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: #ffffff;
-    color: #333;
+    background: #333;
     border: none;
+    color: white;
+    width: 40px; height: 40px; border-radius: 50%;
     cursor: pointer;
-    font-size: 1.5rem;
     font-weight: bold;
-    line-height: 45px;
+    transition: 0.2s;
+}
+.carousel-nav-btn:hover { background: #e100ff; }
+
+/* =========================================
+   5. MINHA BIBLIOTECA (Grid Centralizado)
+   ========================================= */
+.finished-games-section {
+    padding: 50px 20px;
     text-align: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    z-index: 20; 
-    transition: background 0.2s, color 0.2s;
+    background: linear-gradient(0deg, #0f0318 0%, #1a0e27 100%);
 }
 
-.carousel-nav-btn:hover {
-    background: #E100FF; 
-    color: #fff;
-}
-
-.carousel-nav-btn.right {
-    right: 50px; 
-}
-
-.carousel-nav-btn.left {
-    left: 50px;
+.finished-games-section h2 {
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
 }
 
 .games-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 25px;
-    padding: 20px 50px 80px 50px;
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -273,74 +329,64 @@ section h2 {
     position: relative;
     border-radius: 12px;
     overflow: hidden;
-    cursor: pointer;
+    width: 350px;
+    height: 300px;
+    border: 1px solid #333;
+    background: #150a20;
     transition: all 0.3s ease;
-    background: #1a1226;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
-.game-grid-card:hover { 
-    transform: translateY(-8px); 
-    box-shadow: 0 0 25px #00BFFF; 
-    z-index: 2;
+.game-grid-card:hover {
+    transform: translateY(-8px);
+    border-color: #00BFFF;
+    box-shadow: 0 8px 20px rgba(0, 191, 255, 0.3);
 }
 
-/* --- MUDANÇA 3: IMAGENS DA LISTA GERAL --- */
-.game-grid-card img { 
-    width: 100%; 
-    height: 280px; 
-    object-fit: fill; /* ESTICA a imagem */
-    display: block; 
+.game-grid-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
 }
+
+.game-grid-card:hover img { transform: scale(1.1); }
 
 .card-overlay {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.95) 20%, rgba(0,0,0,0) 100%);
-    padding: 20px 15px 15px 15px;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+    padding: 20px 10px 10px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
     display: flex;
-    justify-content: space-between;
     align-items: flex-end;
+    justify-content: center;
+    height: 50%;
 }
 
-.card-overlay h4 { 
-    margin: 0; 
-    font-size: 1em; 
-    text-shadow: 2px 2px 4px black; 
+.game-grid-card:hover .card-overlay { opacity: 1; }
+
+.card-overlay h4 {
+    margin: 0;
+    font-size: 0.95rem;
     color: #fff;
-    font-weight: 600;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black;
+    line-height: 1.2;
 }
 
 .score-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
     background: #00BFFF;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-weight: bold;
     color: #000;
-    font-size: 0.9em;
-    box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
-}
-
-@media (max-width: 768px) {
-    .hero-content h1 { font-size: 2em; }
-    
-    .podium-container { 
-        align-items: center; 
-        flex-direction: column; 
-        gap: 40px; 
-        margin-top: 20px;
-    }
-    .gold { order: 1; transform: scale(1.1); margin-bottom: 0; } 
-    .gold:hover { transform: scale(1.15); }
-    .silver { order: 2; }
-    .bronze { order: 3; }
-    .games-grid { 
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        padding: 20px; 
-    }
-    .carousel-container { padding: 20px; }
-    .carousel-nav-btn.right { right: 20px; }
-    .carousel-nav-btn.left { left: 20px; }
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    z-index: 2;
 }

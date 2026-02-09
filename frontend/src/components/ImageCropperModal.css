@@ -1,0 +1,64 @@
+/* frontend/src/components/ImageCropperModal.css */
+.crop-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.crop-modal-container {
+    background-color: #1a0e27;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 12px;
+    border: 1px solid #e100ff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+}
+
+.crop-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.crop-modal-header h3 { margin: 0; color: #e100ff; }
+.close-btn { background: none; border: none; color: #fff; cursor: pointer; }
+
+.crop-container {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Altura da área de corte */
+    background: #000;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.controls {
+    padding: 10px 0;
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.slider-label { color: #aaa; min-width: 50px; }
+.mui-slider { color: #e100ff !important; } /* Cor do slider */
+
+.crop-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+    border-top: 1px solid #333;
+    padding-top: 20px;
+}
